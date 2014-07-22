@@ -5,8 +5,8 @@
 <% end %>
 
 <form method="post" action="/messages/<%= message["id"] %>/comment">
-  <label id="comment">Comment:</label>
+  <label for="comment">Comment:</label>
   <input type="text" name="comment" id="comment" />
-  <input type="submit" value="Add Comment" />
+  <button type="submit">Add Comment</button>
 </form>
 

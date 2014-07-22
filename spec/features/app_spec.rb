@@ -77,15 +77,25 @@ feature "Messages" do
 
     click_button "Submit"
 
-    click_link "Comment"
+    fill_in "Message", :with => "Hey Computer!"
 
-    expect(page).to have_button("Add Comment")
+    click_button "Submit"
 
-    fill_in "Comment", :with => "Super fantastic!"
+    first(:link, "Comment").click
+
+    expect(page).to have_content("Comments:")
+
+    fill_in "comment", :with => "Super fantastic!"
 
     click_button "Add Comment"
 
-    expect(page).to have_button("Super fantastic!")
+    expect(page).to have_content("Super fantastic!")
+
+    visit "/"
+
+    find("li", :text => "Hey Computer!").click_on("Comment")
+
+    expect(page).to have_no_content("Super fantastic!")
 
   end
 end
