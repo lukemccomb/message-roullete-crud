@@ -2,8 +2,10 @@ require "rspec"
 require "capybara"
 
 feature "Messages" do
-  scenario "As a user, I can submit a message" do
+  before(:each) do
     visit "/"
+  end
+  scenario "As a user, I can submit a message" do
 
     expect(page).to have_content("Message Roullete")
 
@@ -19,7 +21,6 @@ feature "Messages" do
   end
 
   scenario "As a user, I see an error message if I enter a message > 140 characters" do
-    visit "/"
 
     fill_in "Message", :with => "a" * 141
 
@@ -29,7 +30,6 @@ feature "Messages" do
   end
 
   scenario "User can edit messages and see changes on homepage" do
-    visit "/"
 
     fill_in "Message", :with => "Hello Everyone!"
 
@@ -46,6 +46,20 @@ feature "Messages" do
     click_button "Update"
 
     expect(page).to have_content("Hey Everybody!")
+  end
+
+  scenario "User can see edit messages errors" do
+    fill_in "Message", :with => "Hello Everyone!"
+
+    click_button "Submit"
+
+    click_link "Edit"
+
+    fill_in "message", :with => "a" * 141
+
+    click_button "Update"
+
+    expect(page).to have_content("Message must be less than 140 characters.")
   end
 
 end
