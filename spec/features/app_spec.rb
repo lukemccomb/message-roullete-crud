@@ -71,4 +71,21 @@ feature "Messages" do
 
     expect(page).to have_no_content("Hello Everyone!")
   end
+
+  scenario "User can comment on messages" do
+    fill_in "Message", :with => "Hello Everyone!"
+
+    click_button "Submit"
+
+    click_link "Comment"
+
+    expect(page).to have_button("Add Comment")
+
+    fill_in "Comment", :with => "Super fantastic!"
+
+    click_button "Add Comment"
+
+    expect(page).to have_button("Super fantastic!")
+
+  end
 end

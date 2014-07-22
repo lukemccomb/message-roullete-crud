@@ -51,4 +51,15 @@ class App < Sinatra::Application
     redirect "/"
   end
 
+  get "/messages/:id/comment" do
+    comments = @database_connection.sql("SELECT * from comments WHERE messages_id = #{params[:id]}")
+    message = @database_connection.sql("SELECT * FROM messages WHERE id = #{params[:id]}").first
+    erb :"messages/comment", locals: {comments: comments, message: message}
+  end
+
+  post "/messages/:id/comment" do
+    @database_connection.sql("INSERT INTO comments (comment, messages_id) VALUES ('#{params[:comment]}', #{params[:id]})")
+    redirect "/messages/#{params[:id]}/comment"
+  end
+
 end
