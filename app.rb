@@ -18,6 +18,21 @@ class App < Sinatra::Application
     erb :home, locals: {messages: messages}
   end
 
+  get "/messages/:id/edit" do
+
+    message = @database_connection.sql("SELECT * FROM messages WHERE id=#{params[:id]}").first
+
+    erb :"messages/edit", locals: {message: message}
+  end
+
+  get "/messages/:id/" do
+    messages = @database_connection.sql("SELECT * FROM messages")
+
+    message = messages.find(params[:id])
+
+    erb :"messages/edit", locals: {messages: messages, message: message}
+  end
+
   post "/messages" do
     message = params[:message]
     if message.length <= 140
@@ -26,6 +41,10 @@ class App < Sinatra::Application
       flash[:error] = "Message must be less than 140 characters."
     end
     redirect "/"
+  end
+
+  patch "/messages/:id/" do
+
   end
 
 end
