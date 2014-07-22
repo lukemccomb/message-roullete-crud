@@ -1,0 +1,12 @@
+<h2>Comments:</h2>
+
+<% comments.each do |comment| %>
+  <li><%= comment["comment"] %></li>
+<% end %>
+
+<form method="post" action="/messages/<%= message["id"] %>/comment">
+  <label id="comment">Comment:</label>
+  <input type="text" name="comment" id="comment" />
+  <input type="submit" value="Add Comment" />
+</form>
+
