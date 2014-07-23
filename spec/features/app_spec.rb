@@ -98,4 +98,20 @@ feature "Messages" do
     expect(page).to have_no_content("Super fantastic!")
 
   end
+
+  scenario "User can like a message" do
+
+    fill_in "Message", :with => "Hello Everyone!"
+
+    click_button "Submit"
+
+    click_button "Like"
+
+    expect(page).to have_content("\"Hello Everyone!\" 1 Likes")
+
+    click_button "Like"
+
+    expect(page).to have_content("2 Likes")
+
+  end
 end

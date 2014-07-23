@@ -1,14 +1,25 @@
-<form method="post" action="/messages">
-  <label for="message">Message:</label>
+<form method="post" action="/messages" xmlns="http://www.w3.org/1999/html">
+  <label for="message">Message:</label><br>
   <textarea type="text" col="40" row="5" id="message" name="message"></textarea><br>
   <button>Submit</button>
 </form>
 
 <% messages.each do |message| %>
 
-  <li><%= message["message"] %> | <a href="/messages/<%= message["id"] %>/edit">Edit</a> | <a href="/messages/<%= message["id"] %>/comment">Comment</a> <form method="post" action="/messages/<%= message["id"] %>">
+  <hr>
+  <li>
+    <h2>
+      "<%= message["message"] %>"
+    </h2>
+    <span>
+      <form method="post" action="/messages/<%= message["id"] %>/likes"><%= message["likes"] %> <button type="submit" name="likes" >Likes</button></form>
+    </span>
+    <a href="/messages/<%= message["id"] %>/edit">Edit</a><br>
+    <a href="/messages/<%= message["id"] %>/comment">Comment</a><br>
+    <form method="post" action="/messages/<%= message["id"] %>">
     <input type="hidden" name="_method" value="delete" />
-    <button type="submit">Delete</button></form></li>
+    <button type="submit">Delete</button></form>
+  </li>
 
 
 <% end %>

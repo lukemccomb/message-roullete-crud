@@ -62,4 +62,9 @@ class App < Sinatra::Application
     redirect "/messages/#{params[:id]}/comment"
   end
 
+  post "/messages/:id/likes" do
+    @database_connection.sql("UPDATE messages SET likes = likes + 1 WHERE id=#{params[:id]}")
+    redirect "/"
+  end
+
 end
